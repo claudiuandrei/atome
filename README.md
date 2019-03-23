@@ -1,19 +1,19 @@
-# Carbo
+# Atome
 
-## Super fast and simple immutable object helpers
+## Functional atoms and cursors
 
-Carbo is a super fast and simple set of helpers for immutable data. It runs in the browser, or on the server using node.js.
+Atome is a functional set of helpers for creating and manipulating actoms and cursor written in TypeScript. It runs in the browser, or on the server using node.js.
 
 ### Setup
 
 ```bash
-yarn add carbo
+yarn add atome
 ```
 
 or
 
 ```bash
-npm install --save carbo
+npm install --save atome
 ```
 
 ### Usage
@@ -21,34 +21,29 @@ npm install --save carbo
 Before you start import the library
 
 ```javascript
-import { has, get, set, unset, update } from 'carbo'
+import { create, cursor, deref, reset, watch } from 'atome'
 ```
 
 #### Basic usage
 
 ```javascript
-// We have an object
-const obj = { name: 'John Doe', age: 25, work: { company: 'ACME', title: 'CEO' } }
+// Setup a new atom
+const atom = create({ topic: { base: true } })
+const pointer = cursor(atom, ['topic'])
 
-// Has
-has(obj, 'name') // true
-has(obj, ['work', 'email']) // false
+// Update the data
+const context = { test: true }
 
-// Get
-get(obj, 'name') // John Doe
-get(obj, ['work', 'title']) // CEO
+// Setup a watcher
+const unwatch = watch(atom, () => {
+  console.log(deref(atom), deref(pointer)) // { topic: { test: true } } { base: true }
+})
 
-// Set
-const obj1 = set(obj, 'name', 'Jane Doe') // { ...obj, name: 'Jane Doe' }
-const obj2 = set(obj, ['work', 'title'], 'CTO') // { ...obj, work: { ...obj.work, title: CTO }}
+// Reset the cursor data
+reset(pointer, context)
 
-// Unset
-const obj3 = unset(obj, 'age') // { name: 'John Doe', work: obj.work }
-const obj4 = unset(obj, ['work', 'title']) // { name: 'John Doe', age: 25, work: { company: 'ACME' } }
-
-// Update
-const obj5 = update(obj, 'age', n => n + 1) // { ...obj, age: 26 }
-const obj6 = update(obj, ['work', 'title'], s => `Best ${s}`) // { ...obj, work: { ...obj.work, title: 'Best CEO' } }
+// Cleanup
+unwatch()
 ```
 
 ## License
