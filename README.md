@@ -36,7 +36,7 @@ const context = { test: true }
 
 // Setup a watcher
 const unwatch = watch(atom, () => {
-  console.log(deref(atom), deref(pointer)) // { topic: { test: true } } { base: true }
+  console.log(deref(atom), deref(pointer)) // { topic: { test: true } } { test: true }
 })
 
 // Reset the cursor data
