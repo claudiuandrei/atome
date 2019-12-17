@@ -2,7 +2,7 @@
 
 ## Functional atoms and cursors
 
-Atome is a functional set of helpers for creating and manipulating actoms and cursor written in TypeScript. It runs in the browser, or on the server using node.js.
+Atome is a functional set of helpers for creating and manipulating atoms and cursor written in TypeScript. It runs in the browser, or on the server using node.js.
 
 ### Setup
 
